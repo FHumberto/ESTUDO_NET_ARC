@@ -34,7 +34,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        DateTime utcNow = DateTime.UtcNow;
+        DateTime localNow = DateTime.Now;
 
         ChangeTracker
             .Entries<BaseEntity>()
@@ -44,12 +44,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedDate = utcNow;
-                    entry.Entity.UpdatedDate = utcNow;
+                    entry.Entity.CreatedDate = localNow;
+                    entry.Entity.UpdatedDate = localNow;
                 }
                 else if (entry.State == EntityState.Modified)
                 {
-                    entry.Entity.UpdatedDate = utcNow;
+                    entry.Entity.UpdatedDate = localNow;
                 }
             });
 
