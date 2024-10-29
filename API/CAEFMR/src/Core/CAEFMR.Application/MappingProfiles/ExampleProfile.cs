@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CAEFMR.Application.Features.Example.Queries.GetExampleById;
+using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
 using CAEFMR.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,6 @@ public class ExampleProfile : Profile
     public ExampleProfile()
     {
         CreateMap<Example, GetExampleByIdDto>();
-        CreateMap<GetExampleByIdDto, Example>().ReverseMap();
+        CreateMap<Example, GetExampleListDto>();
     }
 }

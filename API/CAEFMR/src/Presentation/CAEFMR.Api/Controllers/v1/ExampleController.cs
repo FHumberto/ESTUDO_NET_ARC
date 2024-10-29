@@ -1,4 +1,5 @@
 ﻿using CAEFMR.Application.Features.Example.Queries.GetExampleById;
+using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,16 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 namespace CAEFMR.Api.Controllers.v1;
 [Route("api/[controller]")]
 [ApiController]
-public class ExamplesController : ControllerBase
+public class ExampleController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public ExamplesController(IMediator mediator)
+    public ExampleController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    // GET api/<ExamplesController>/5
+    // GET: api/<Example>
+    [HttpGet]
+    public async Task<List<GetExampleListDto>> Get()
+    {
+        List<GetExampleListDto>? Examples = await _mediator.Send(new GetExampleListQuery());
+        return Examples;
+    }
+
+    // GET api/<Example>/5
     [HttpGet("{id}")]
     public async Task<ActionResult<GetExampleByIdDto>> GetById(int id)
     {
