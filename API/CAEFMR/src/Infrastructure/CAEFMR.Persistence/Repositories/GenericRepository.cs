@@ -16,7 +16,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public GenericRepository(AppDbContext context)
     {
-        this._context = context;
+        _context = context;
     }
 
     public async Task CreateAsync(T entity)
@@ -31,10 +31,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetAsync()
-    {
-        return await _context.Set<T>().AsNoTracking().ToListAsync();
-    }
+    public async Task<IReadOnlyList<T>> GetAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
     public async Task<T> GetByIdAsync(int id)
     {
