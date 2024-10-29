@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Queries.GetExampleById;
 
-public class GetExampleByIdQueryHandler : IRequestHandler<GetExampleByIdQuery, GetExampleByIdDto>
+public class GetExampleByIdHandler : IRequestHandler<GetExampleByIdQuery, GetExampleByIdDto>
 {
     #region Propriedades
 
@@ -15,7 +15,7 @@ public class GetExampleByIdQueryHandler : IRequestHandler<GetExampleByIdQuery, G
 
     #region Construtores
 
-    public GetExampleByIdQueryHandler(IExampleRepository exampleRepository, IMapper mapper)
+    public GetExampleByIdHandler(IExampleRepository exampleRepository, IMapper mapper)
     {
         _exampleRepository = exampleRepository;
         _mapper = mapper;
