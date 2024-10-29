@@ -1,11 +1,12 @@
-﻿using CAEFMR.Application.Features.Example.Queries.GetExampleById;
+﻿using CAEFMR.Application.Features.Example.Commands.Create;
+using CAEFMR.Application.Features.Example.Queries.GetExampleById;
 using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAEFMR.Api.Controllers.v1;
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class ExampleController : ControllerBase
 {
@@ -30,5 +31,16 @@ public class ExampleController : ControllerBase
     {
         GetExampleByIdDto? Example = await _mediator.Send(new GetExampleByIdQuery(id));
         return Ok(Example);
+    }
+
+    // POST api/<Example>
+    [HttpPost]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Post(CreateExampleCommand example)
+    {
+        int response = await _mediator.Send(example);
+        return CreatedAtAction(nameof(Get), new { id = response });
     }
 }
