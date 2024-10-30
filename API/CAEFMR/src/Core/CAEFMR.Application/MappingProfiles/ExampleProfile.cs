@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CAEFMR.Application.Features.Example.Commands.Create;
+using CAEFMR.Application.Features.Example.Commands.Update;
 using CAEFMR.Application.Features.Example.Queries.GetExampleById;
 using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
 using CAEFMR.Domain.Entities;
@@ -19,6 +20,6 @@ public class ExampleProfile : Profile
         CreateMap<Example, GetExampleByIdDto>();
         CreateMap<Example, GetExampleListDto>();
         CreateMap<CreateExampleCommand, Example>();
-        CreateMap<CreateExampleCommand, Example>();
+        CreateMap<UpdateExampleCommand, Example>();
     }
 }

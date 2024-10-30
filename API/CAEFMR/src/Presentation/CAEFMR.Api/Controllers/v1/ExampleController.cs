@@ -1,4 +1,6 @@
 ﻿using CAEFMR.Application.Features.Example.Commands.Create;
+using CAEFMR.Application.Features.Example.Commands.Delete;
+using CAEFMR.Application.Features.Example.Commands.Update;
 using CAEFMR.Application.Features.Example.Queries.GetExampleById;
 using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
 using MediatR;
@@ -17,15 +19,13 @@ public class ExampleController : ControllerBase
         _mediator = mediator;
     }
 
-    // GET: api/<Example>
     [HttpGet]
-    public async Task<List<GetExampleListDto>> Get()
+    public async Task<ActionResult<List<GetExampleListDto>>> Get()
     {
-        List<GetExampleListDto>? Examples = await _mediator.Send(new GetExampleListQuery());
-        return Examples;
+        List<GetExampleListDto>? examples = await _mediator.Send(new GetExampleListQuery());
+        return Ok(examples);
     }
 
-    // GET api/<Example>/5
     [HttpGet("{id}")]
     public async Task<ActionResult<GetExampleByIdDto>> GetById(int id)
     {
@@ -33,14 +33,35 @@ public class ExampleController : ControllerBase
         return Ok(Example);
     }
 
-    // POST api/<Example>
     [HttpPost]
-    [ProducesResponseType(201)]
-    [ProducesResponseType(400)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Post(CreateExampleCommand example)
     {
         int response = await _mediator.Send(example);
         return CreatedAtAction(nameof(Get), new { id = response });
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> Put(UpdateExampleCommand example)
+    {
+        await _mediator.Send(example);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> Delete(int id)
+    {
+        DeleteExampleCommand? example = new() { Id = id };
+        await _mediator.Send(example);
+        return NoContent();
     }
 }
