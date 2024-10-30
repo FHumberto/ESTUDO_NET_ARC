@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using CAEFMR.Application.Features.Example.Commands.Create;
 using CAEFMR.Application.Features.Example.Commands.Update;
-using CAEFMR.Application.Features.Example.Queries.GetExampleById;
-using CAEFMR.Application.Features.Example.Queries.GetExamplesList;
+using CAEFMR.Application.Features.Example.Queries.GetById;
+using CAEFMR.Application.Features.Example.Queries.GetList;
 using CAEFMR.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CAEFMR.Application.MappingProfiles;
 

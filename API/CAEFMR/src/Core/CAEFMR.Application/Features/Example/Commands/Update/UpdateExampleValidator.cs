@@ -1,14 +1,9 @@
-﻿using CAEFMR.Application.Features.Example.Commands.Create;
-using CAEFMR.Application.Interfaces.Repositories;
+﻿using CAEFMR.Application.Interfaces.Repositories;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CAEFMR.Application.Features.Example.Commands.Update;
-internal class UpdateExampleValidator : AbstractValidator<UpdateExampleCommand>
+
+public class UpdateExampleValidator : AbstractValidator<UpdateExampleCommand>
 {
     private readonly IExampleRepository _exampleRepository;
 
@@ -29,7 +24,7 @@ internal class UpdateExampleValidator : AbstractValidator<UpdateExampleCommand>
         _exampleRepository = exampleRepository;
     }
 
-    private async Task<bool> ExampleMustExist(int id, CancellationToken token) 
+    private async Task<bool> ExampleMustExist(int id, CancellationToken token)
     {
         var example = await _exampleRepository.GetByIdAsync(id);
         return example != null;

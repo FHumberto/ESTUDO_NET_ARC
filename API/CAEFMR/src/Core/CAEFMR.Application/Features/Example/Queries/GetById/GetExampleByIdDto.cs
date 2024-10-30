@@ -1,4 +1,4 @@
-﻿namespace CAEFMR.Application.Features.Example.Queries.GetExampleById;
+﻿namespace CAEFMR.Application.Features.Example.Queries.GetById;
 
 public class GetExampleByIdDto
 {

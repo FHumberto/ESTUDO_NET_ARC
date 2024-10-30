@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CAEFMR.Application.Features.Example.Queries.GetExamplesList;
+﻿namespace CAEFMR.Application.Features.Example.Queries.GetList;
 
 public class GetExampleListDto
 {

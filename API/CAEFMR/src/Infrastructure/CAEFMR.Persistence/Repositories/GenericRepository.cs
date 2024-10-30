@@ -2,22 +2,12 @@
 using CAEFMR.Domain.Entities;
 using CAEFMR.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CAEFMR.Persistence.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> where T : BaseEntity
 {
-    protected readonly AppDbContext _context;
-
-    public GenericRepository(AppDbContext context)
-    {
-        _context = context;
-    }
+    protected readonly AppDbContext _context = context;
 
     public async Task CreateAsync(T entity)
     {
@@ -33,12 +23,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public async Task<IReadOnlyList<T>> GetAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
-    public async Task<T> GetByIdAsync(int id)
-    {
-        return await _context.Set<T>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(q => q.Id == id);
-    }
+    public async Task<T> GetByIdAsync(int id) 
+        => await _context.Set<T>()
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(q => q.Id == id);
 
     public async Task UpdateAsync(T entity)
     {

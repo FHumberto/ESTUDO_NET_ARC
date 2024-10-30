@@ -11,10 +11,7 @@ public static class ServiceRegistration
 {
     public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>(options =>
-        {
-            options.UseSqlServer(configuration.GetConnectionString("AppDbContext"));
-        });
+        services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AppDbContext")));
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IExampleRepository, ExampleRepository>();
