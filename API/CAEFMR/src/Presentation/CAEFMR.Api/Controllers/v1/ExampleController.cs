@@ -1,27 +1,27 @@
-﻿using CAEFMR.Application.Features.Example.Commands.Create;
+﻿using Asp.Versioning;
+using CAEFMR.Application.Features.Example.Commands.Create;
 using CAEFMR.Application.Features.Example.Commands.Delete;
 using CAEFMR.Application.Features.Example.Commands.Update;
 using CAEFMR.Application.Features.Example.Queries.GetById;
 using CAEFMR.Application.Features.Example.Queries.GetList;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAEFMR.Api.Controllers.v1;
-[Route("[controller]")]
-[ApiController]
-public class ExampleController(IMediator mediator) : ControllerBase
+
+[ApiVersion(1)]
+public class ExampleController : BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<List<GetExampleListDto>>> Get()
     {
-        List<GetExampleListDto>? examples = await mediator.Send(new GetExampleListQuery());
+        List<GetExampleListDto>? examples = await Mediator.Send(new GetExampleListQuery());
         return Ok(examples);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<GetExampleByIdDto>> GetById(int id)
     {
-        GetExampleByIdDto? Example = await mediator.Send(new GetExampleByIdQuery(id));
+        GetExampleByIdDto? Example = await Mediator.Send(new GetExampleByIdQuery(id));
         return Ok(Example);
     }
 
@@ -31,7 +31,7 @@ public class ExampleController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Post(CreateExampleCommand example)
     {
-        int response = await mediator.Send(example);
+        int response = await Mediator.Send(example);
         return CreatedAtAction(nameof(Get), new { id = response });
     }
 
@@ -42,7 +42,7 @@ public class ExampleController(IMediator mediator) : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Put(UpdateExampleCommand example)
     {
-        await mediator.Send(example);
+        await Mediator.Send(example);
         return NoContent();
     }
 
@@ -53,7 +53,7 @@ public class ExampleController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Delete(int id)
     {
         DeleteExampleCommand? example = new() { Id = id };
-        await mediator.Send(example);
+        await Mediator.Send(example);
         return NoContent();
     }
 }

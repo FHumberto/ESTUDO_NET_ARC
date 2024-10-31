@@ -1,7 +1,8 @@
+using CAEFMR.Api.Extensions;
 using CAEFMR.Application;
 using CAEFMR.Persistence;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 
 #region CAMADAS
 
@@ -12,16 +13,13 @@ builder.Services.AddPersistenceLayer(builder.Configuration);
 
 builder.Services.AddControllers();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerWithVersioning();
 
-var app = builder.Build();
+WebApplication? app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerWithVersioning();
 }
 
 app.UseHttpsRedirection();
