@@ -34,6 +34,7 @@ public static class SwaggerExtension
     public static IServiceCollection AddSwaggerWithVersioning(this IServiceCollection services)
     {
         #region CONFIGURAÇÃO
+
         services.AddApiVersioning(
             setup =>
             {
@@ -48,9 +49,11 @@ public static class SwaggerExtension
                     setup.GroupNameFormat = "'v'VVV";
                     setup.SubstituteApiVersionInUrl = true;
                 });
+
         #endregion
 
         #region AUTORIZAÇÃO
+
         services.AddSwaggerGen(
             setup =>
             {
@@ -80,11 +83,15 @@ public static class SwaggerExtension
                         new List<string>()
                     },
                     });
+                setup.EnableAnnotations();
             });
+
         #endregion
 
         #region INJEÇÃO
+
         services.ConfigureOptions<ConfigureSwaggerOptions>();
+        
         #endregion
 
         return services;
