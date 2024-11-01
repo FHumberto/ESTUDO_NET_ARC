@@ -2,7 +2,7 @@ using CAEFMR.Api.Extensions;
 using CAEFMR.Application;
 using CAEFMR.Persistence;
 
-WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 #region CAMADAS
 
@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerWithVersioning();
 
-WebApplication? app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

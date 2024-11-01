@@ -2,4 +2,4 @@
 
 namespace CAEFMR.Application.Features.Example.Queries.GetList;
 
-public record GetExampleListQuery() : IRequest<List<GetExampleListDto>>;
+public record GetExampleListQuery : IRequest<List<GetExampleListDto>>;

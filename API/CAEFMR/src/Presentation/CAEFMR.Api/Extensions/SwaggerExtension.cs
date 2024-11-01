@@ -103,7 +103,7 @@ public static class SwaggerExtension
         {
             foreach (var description in provider.ApiVersionDescriptions)
             {
-                OpenApiInfo? info = new()
+                OpenApiInfo info = new()
                 {
                     Title = Assembly.GetCallingAssembly().GetName().Name,
                     Version = description.ApiVersion.ToString()

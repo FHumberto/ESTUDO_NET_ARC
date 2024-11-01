@@ -1,7 +1,6 @@
 ﻿using CAEFMR.Domain.Entities;
 using CAEFMR.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CAEFMR.Persistence.Contexts;
 

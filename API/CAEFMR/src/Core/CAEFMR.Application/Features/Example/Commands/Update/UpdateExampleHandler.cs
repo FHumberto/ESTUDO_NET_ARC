@@ -9,7 +9,7 @@ public class UpdateExampleHandler(IMapper mapper, IExampleRepository exampleRepo
 {
     public async Task<Unit> Handle(UpdateExampleCommand request, CancellationToken cancellationToken)
     {
-        UpdateExampleValidator? validator = new(exampleRepository);
+        UpdateExampleValidator validator = new(exampleRepository);
 
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 

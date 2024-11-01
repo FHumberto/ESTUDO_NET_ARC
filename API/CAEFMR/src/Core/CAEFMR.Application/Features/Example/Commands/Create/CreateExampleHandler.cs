@@ -9,7 +9,7 @@ public class CreateExampleHandler(IMapper mapper, IExampleRepository exampleRepo
 {
     public async Task<int> Handle(CreateExampleCommand request, CancellationToken cancellationToken)
     {
-        CreateExampleValidator? validator = new();
+        CreateExampleValidator validator = new();
 
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 

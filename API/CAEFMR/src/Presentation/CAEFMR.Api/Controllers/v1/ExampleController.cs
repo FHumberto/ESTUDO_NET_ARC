@@ -19,7 +19,7 @@ public class ExampleController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<GetExampleListDto>>> Get()
     {
-        List<GetExampleListDto>? examples = await Mediator.Send(new GetExampleListQuery());
+        List<GetExampleListDto> examples = await Mediator.Send(new GetExampleListQuery());
         return Ok(examples);
     }
 
@@ -29,7 +29,7 @@ public class ExampleController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetExampleByIdDto>> GetById(int id)
     {
-        GetExampleByIdDto? example = await Mediator.Send(new GetExampleByIdQuery(id));
+        GetExampleByIdDto example = await Mediator.Send(new GetExampleByIdQuery(id));
         return Ok(example);
     }
 
@@ -60,7 +60,7 @@ public class ExampleController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)
     {
-        DeleteExampleCommand? example = new() { Id = id };
+        DeleteExampleCommand example = new() { Id = id };
         await Mediator.Send(example);
         return NoContent();
     }
