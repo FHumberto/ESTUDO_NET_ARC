@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using CAEFMR.Application.Features.Example.Queries.GetById;
 using CAEFMR.Application.Features.Example.Queries.GetList;
+using CAEFMR.Application.Features.Example.Queries.GetPagedList;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -26,5 +27,15 @@ public class ExampleController : BaseApiController
     {
         GetExampleByIdDto example = await Mediator.Send(new GetExampleByIdQuery(id));
         return Ok(example);
+    }
+
+    [HttpGet("paged")]
+    [SwaggerOperation(Summary = "Obter lista paginada de exemplos", Description = "Retorna uma lista paginada de exemplos.")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPagedList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        var query = new GetExamplePagedListQuery { PageNumber = pageNumber, PageSize = pageSize };
+        var examples = await Mediator.Send(query);
+        return Ok(examples);
     }
 }

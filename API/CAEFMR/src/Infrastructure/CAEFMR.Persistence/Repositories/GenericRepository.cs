@@ -23,7 +23,14 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
 
     public async Task<IReadOnlyList<T>> GetAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
-    public async Task<T?> GetByIdAsync(int id) 
+    public async Task<IReadOnlyList<T>> GetPagedAsync(int pageNumber, int pageSize)
+        => await _context.Set<T>()
+                    .AsNoTracking()
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+    public async Task<T?> GetByIdAsync(int id)
         => await _context.Set<T>()
                         .AsNoTracking()
                         .FirstOrDefaultAsync(q => q.Id == id);
