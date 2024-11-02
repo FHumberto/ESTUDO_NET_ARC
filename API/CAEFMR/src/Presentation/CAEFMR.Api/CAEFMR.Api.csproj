@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CAEFMR.Application\CAEFMR.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CAEFMR.Identity\CAEFMR.Identity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CAEFMR.Persistence\CAEFMR.Persistence.csproj" />
   </ItemGroup>
 

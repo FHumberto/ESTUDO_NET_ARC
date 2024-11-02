@@ -1,5 +1,6 @@
 using CAEFMR.Api.Extensions;
 using CAEFMR.Application;
+using CAEFMR.Identity;
 using CAEFMR.Persistence;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration);
+builder.Services.AddIdentityLayer(builder.Configuration);
 
 #endregion
 
