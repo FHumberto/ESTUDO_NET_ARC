@@ -17,7 +17,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerWithVersioning();
 
+builder.Services.AddCorsPolicies();
+
 WebApplication app = builder.Build();
+
+app.UseCorsPolicies();
 
 if (app.Environment.IsDevelopment())
 {
