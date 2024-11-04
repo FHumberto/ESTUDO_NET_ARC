@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CAEFMR.Api.Controllers.v2;
 
-[ApiVersion(2)]
+[ApiVersion("2")]
 public class ExampleController : BaseApiController
 {
     [HttpGet]

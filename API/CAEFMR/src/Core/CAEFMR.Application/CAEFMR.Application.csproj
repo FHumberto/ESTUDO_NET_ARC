@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CAEFMR.Domain\CAEFMR.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Auth\Register\" />
+  </ItemGroup>
+
 </Project>

@@ -4,14 +4,14 @@ using CAEFMR.Application.Features.Example.Commands.Delete;
 using CAEFMR.Application.Features.Example.Commands.Update;
 using CAEFMR.Application.Features.Example.Queries.GetById;
 using CAEFMR.Application.Features.Example.Queries.GetList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CAEFMR.Api.Controllers.v1;
 
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
-[ApiController]
+[ApiVersion("1")]
+[Authorize(Roles = "Administrator")]
 public class ExampleController : BaseApiController
 {
     [HttpGet]
