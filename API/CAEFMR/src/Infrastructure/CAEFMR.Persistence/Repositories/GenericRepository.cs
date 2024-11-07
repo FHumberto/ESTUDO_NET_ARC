@@ -11,7 +11,7 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
 
     public async Task CreateAsync(T entity)
     {
-        await _context.AddAsync(entity);
+        await _context.Set<T>().AddAsync(entity);
         await _context.SaveChangesAsync();
     }
 
@@ -21,7 +21,8 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
+    public async Task<IReadOnlyList<T>> GetAllAsync()
+        => await _context.Set<T>().AsNoTracking().ToListAsync();
 
     public async Task<IReadOnlyList<T>> GetPagedAsync(int pageNumber, int pageSize)
         => await _context.Set<T>()
