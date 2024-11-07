@@ -1,4 +1,5 @@
-﻿using CAEFMR.Application.Models.Identity;
+﻿using CAEFMR.Application.Features.Auth.Login;
+using CAEFMR.Application.Features.Auth.Registration;
 
 namespace CAEFMR.Application.Contracts.Identity;
 

@@ -1,4 +1,6 @@
 ﻿using CAEFMR.Application.Contracts.Identity;
+using CAEFMR.Application.Features.Auth.Login;
+using CAEFMR.Application.Features.Auth.Registration;
 using CAEFMR.Application.Models.Identity;
 using CAEFMR.Identity.Models;
 using Microsoft.AspNetCore.Identity;

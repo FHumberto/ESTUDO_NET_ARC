@@ -1,4 +1,4 @@
-﻿namespace CAEFMR.Application.Models.Identity;
+﻿namespace CAEFMR.Application.Features.Auth.Login;
 
 public class AuthResponse
 {

@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using CAEFMR.Application.Contracts.Identity;
-using CAEFMR.Application.Models.Identity;
+using CAEFMR.Application.Features.Auth.Login;
+using CAEFMR.Application.Features.Auth.Registration;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 

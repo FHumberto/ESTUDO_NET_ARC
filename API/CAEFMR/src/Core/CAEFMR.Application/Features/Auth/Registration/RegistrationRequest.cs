@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CAEFMR.Application.Models.Identity;
+namespace CAEFMR.Application.Features.Auth.Registration;
 
 public class RegistrationRequest
 {
