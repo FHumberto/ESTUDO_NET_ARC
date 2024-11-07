@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Auth\**" />
+    <EmbeddedResource Remove="Features\Auth\**" />
+    <None Remove="Features\Auth\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
@@ -15,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CAEFMR.Domain\CAEFMR.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Auth\Register\" />
   </ItemGroup>
 
 </Project>
