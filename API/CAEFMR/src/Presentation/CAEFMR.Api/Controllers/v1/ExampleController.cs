@@ -4,22 +4,22 @@ using CAEFMR.Application.Features.Example.Commands.Delete;
 using CAEFMR.Application.Features.Example.Commands.Update;
 using CAEFMR.Application.Features.Example.Queries.GetById;
 using CAEFMR.Application.Features.Example.Queries.GetList;
-using Microsoft.AspNetCore.Authorization;
+using CAEFMR.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CAEFMR.Api.Controllers.v1;
 
 [ApiVersion("1")]
-[Authorize(Roles = "Administrator")]
+//[Authorize(Roles = "Administrator")]
 public class ExampleController : BaseApiController
 {
     [HttpGet]
     [SwaggerOperation(Summary = "Obter todos os exemplos", Description = "Retorna uma lista de todos os exemplos.")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<GetExampleListDto>>> Get()
+    public async Task<ActionResult<List<ExampleDto>>> Get()
     {
-        List<GetExampleListDto> examples = await Mediator.Send(new GetExampleListQuery());
+        List<ExampleDto> examples = await Mediator.Send(new GetExampleListQuery());
         return Ok(examples);
     }
 
@@ -27,9 +27,9 @@ public class ExampleController : BaseApiController
     [SwaggerOperation(Summary = "Obter um exemplo pelo ID", Description = "Retorna um exemplo específico com base no ID fornecido.")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetExampleByIdDto>> GetById(int id)
+    public async Task<ActionResult<ExampleDto>> GetById(int id)
     {
-        GetExampleByIdDto example = await Mediator.Send(new GetExampleByIdQuery(id));
+        ExampleDto example = await Mediator.Send(new GetExampleByIdQuery(id));
         return Ok(example);
     }
 

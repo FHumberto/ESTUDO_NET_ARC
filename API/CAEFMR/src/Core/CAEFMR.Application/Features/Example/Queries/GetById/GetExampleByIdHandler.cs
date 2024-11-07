@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using CAEFMR.Application.Interfaces.Repositories;
+using CAEFMR.Domain.DTOs;
 using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Queries.GetById;
 
-public class GetExampleByIdHandler(IExampleRepository exampleRepository, IMapper mapper) : IRequestHandler<GetExampleByIdQuery, GetExampleByIdDto>
+public class GetExampleByIdHandler(IExampleRepository exampleRepository, IMapper mapper) : IRequestHandler<GetExampleByIdQuery, ExampleDto>
 {
-    public async Task<GetExampleByIdDto> Handle(GetExampleByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ExampleDto> Handle(GetExampleByIdQuery request, CancellationToken cancellationToken)
     {
         var example = await exampleRepository.GetByIdAsync(request.Id);
 
@@ -15,7 +16,7 @@ public class GetExampleByIdHandler(IExampleRepository exampleRepository, IMapper
             throw new NotImplementedException();
         }
 
-        GetExampleByIdDto? data = mapper.Map<GetExampleByIdDto>(example);
+        ExampleDto? data = mapper.Map<ExampleDto>(example);
 
         return data;
     }
