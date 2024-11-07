@@ -1,4 +1,5 @@
 using CAEFMR.Api.Extensions;
+using CAEFMR.Api.Middlewares;
 using CAEFMR.Application;
 using CAEFMR.Identity;
 using CAEFMR.Persistence;
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerWithVersioning();
 builder.Services.AddCorsPolicies();
 
 WebApplication app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCorsPolicies();
 

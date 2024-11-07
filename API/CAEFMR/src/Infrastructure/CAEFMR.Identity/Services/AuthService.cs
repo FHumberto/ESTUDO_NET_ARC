@@ -1,4 +1,5 @@
 ﻿using CAEFMR.Application.Contracts.Identity;
+using CAEFMR.Application.Exceptions;
 using CAEFMR.Application.Features.Auth.Login;
 using CAEFMR.Application.Features.Auth.Registration;
 using CAEFMR.Application.Models.Identity;
@@ -9,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 namespace CAEFMR.Identity.Services;
 
 public class AuthService : IAuthService
@@ -33,14 +33,14 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new NotImplementedException($"User with {request.Email} not found.");
+            throw new NotFoundException($"User with {request.Email} not found.", request.Email);
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (result.Succeeded == false)
         {
-            throw new NotImplementedException($"Credentials for '{request.Email} aren't valid'.");
+            throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
         }
 
         JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -82,7 +82,7 @@ public class AuthService : IAuthService
                 str.AppendFormat("•{0}\n", err.Description);
             }
 
-            throw new NotImplementedException($"{str}");
+            throw new BadRequestException($"{str}");
         }
     }
 

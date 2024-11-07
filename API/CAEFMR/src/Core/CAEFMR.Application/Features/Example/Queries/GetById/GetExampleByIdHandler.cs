@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CAEFMR.Application.Exceptions;
 using CAEFMR.Application.Interfaces.Repositories;
 using CAEFMR.Domain.DTOs;
 using MediatR;
@@ -11,9 +12,9 @@ public class GetExampleByIdHandler(IExampleRepository exampleRepository, IMapper
     {
         var example = await exampleRepository.GetByIdAsync(request.Id);
 
-        if (example == null)
+        if (example is null)
         {
-            throw new NotImplementedException();
+            throw new NotFoundException(nameof(Example), request.Id);
         }
 
         ExampleDto? data = mapper.Map<ExampleDto>(example);

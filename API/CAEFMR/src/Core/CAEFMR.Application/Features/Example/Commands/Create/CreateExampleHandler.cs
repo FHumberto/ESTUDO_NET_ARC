@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CAEFMR.Application.Exceptions;
 using CAEFMR.Application.Interfaces.Repositories;
-using FluentValidation;
 using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Commands.Create;
@@ -15,7 +15,7 @@ public class CreateExampleHandler(IMapper mapper, IExampleRepository exampleRepo
 
         if (validationResult.Errors.Count != 0)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new BadRequestException("Exemplo Inválido", validationResult);
         }
 
         var exampleToCreate = mapper.Map<Domain.Entities.Example>(request);

@@ -1,4 +1,5 @@
-﻿using CAEFMR.Application.Interfaces.Repositories;
+﻿using CAEFMR.Application.Exceptions;
+using CAEFMR.Application.Interfaces.Repositories;
 using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Commands.Delete;
@@ -11,7 +12,7 @@ public class DeleteExampleHandler(IExampleRepository exampleRepository) : IReque
 
         if (exampleToDelete is null)
         {
-            throw new NotImplementedException();
+            throw new NotFoundException(nameof(Example), request.Id);
         }
 
         await exampleRepository.DeleteAsync(exampleToDelete);

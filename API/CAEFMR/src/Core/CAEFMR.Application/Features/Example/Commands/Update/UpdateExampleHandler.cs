@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CAEFMR.Application.Exceptions;
 using CAEFMR.Application.Interfaces.Repositories;
-using FluentValidation;
 using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Commands.Update;
@@ -15,10 +15,17 @@ public class UpdateExampleHandler(IMapper mapper, IExampleRepository exampleRepo
 
         if (validationResult.Errors.Count != 0)
         {
-            throw new ValidationException(validationResult.Errors);
+            throw new BadRequestException("Exemplo Inválido", validationResult);
         }
 
-        var exampleToUpdate = mapper.Map<Domain.Entities.Example>(request);
+        var exampleToUpdate = await exampleRepository.GetByIdAsync(request.Id);
+
+        if (exampleToUpdate is null)
+        {
+            throw new NotFoundException(nameof(Example), request.Id);
+        }
+
+        mapper.Map(request, exampleToUpdate);
 
         await exampleRepository.UpdateAsync(exampleToUpdate);
 
