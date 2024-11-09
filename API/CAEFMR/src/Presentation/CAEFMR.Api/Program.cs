@@ -2,13 +2,15 @@ using CAEFMR.Api.Extensions;
 using CAEFMR.Api.Middlewares;
 using CAEFMR.Application;
 using CAEFMR.Identity;
+using CAEFMR.Infrastructure;
 using CAEFMR.Persistence;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-#region CAMADAS
+#region ACOPLAMENTO DAS CAMADAS
 
 builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddIdentityLayer(builder.Configuration);
 
