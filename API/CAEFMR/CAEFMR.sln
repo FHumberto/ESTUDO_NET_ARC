@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DE08C7A7-68A7-4DB1-8418-790CB97EA633}"
@@ -27,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAEFMR.Api", "src\Presentat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAEFMR.Persistence", "src\Infrastructure\CAEFMR.Persistence\CAEFMR.Persistence.csproj", "{81EFBB4C-2CAB-4B9F-BCB1-BD1C322B7BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAEFMR.Identity", "src\Infrastructure\CAEFMR.Identity\CAEFMR.Identity.csproj", "{92AE48D6-CBC5-49F8-B3B2-2B683A818CF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAEFMR.Identity", "src\Infrastructure\CAEFMR.Identity\CAEFMR.Identity.csproj", "{92AE48D6-CBC5-49F8-B3B2-2B683A818CF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
