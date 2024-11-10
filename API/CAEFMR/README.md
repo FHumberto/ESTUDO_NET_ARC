@@ -24,3 +24,9 @@ A camada de Infrastructure fornece implementações concretas para os serviços nec
 - Identity: Implementações relacionadas à autenticação e autorização de usuários, como gerenciamento de identidade e integração com o sistema de autenticação.
 - Infrastructure: Implementações genéricas de infraestrutura, como serviços internos, externos, integração com APIs e outros recursos essenciais para o funcionamento da aplicação.
 - Persistence: Responsável pela persistência de dados, com implementações concretas de repositórios, acesso a banco de dados e manipulação de entidades persistidas.
+
+# SERVIÇOS
+
+https://localhost:7101/swagger/index.html
+https://localhost:7101/dashboard#/healthchecks
+https://localhost:7101/health

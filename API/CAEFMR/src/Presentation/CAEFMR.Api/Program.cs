@@ -4,8 +4,17 @@ using CAEFMR.Application;
 using CAEFMR.Identity;
 using CAEFMR.Infrastructure;
 using CAEFMR.Persistence;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+#region [HEALTH_CHECK SERVICES]
+
+builder.Services.AddCustomHealthChecks
+    (builder.Configuration);
+
+#endregion
 
 #region ACOPLAMENTO DAS CAMADAS
 
@@ -32,6 +41,22 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerWithVersioning();
 }
+
+# region [HEALTH_CHECK MAP]
+
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+
+app.UseHealthChecksUI(options =>
+{
+    options.UIPath = "/dashboard";
+});
+
+#endregion
 
 app.UseHttpsRedirection();
 
