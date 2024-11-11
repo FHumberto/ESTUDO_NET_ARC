@@ -13,12 +13,9 @@ public static class SwaggerExtension
     public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
     {
         IServiceProvider services = app.ApplicationServices;
-
         var provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
 
         app.UseSwagger();
-
-        #region AGRUPAMENTO DE VERSÕES
 
         app.UseSwaggerUI(
             options =>
@@ -30,8 +27,6 @@ public static class SwaggerExtension
                         description.GroupName.ToUpperInvariant());
                 }
             });
-
-        #endregion
 
         return app;
     }
@@ -67,26 +62,26 @@ public static class SwaggerExtension
                     new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
-                        Description =
-                            "Insira **Apenas** o **Token** válido, sem o prefixo **'Bearer'**.",
                         In = ParameterLocation.Header,
-                        Type = SecuritySchemeType.Http, //* previne a necessidade de digitar o prefixo sempre
-                        BearerFormat = "JWT",
+                        Type = SecuritySchemeType.Http,
                         Scheme = "Bearer",
+                        BearerFormat = "JWT",
+                        Description =
+                             "Insira **Apenas** o **Token** válido, sem o prefixo **'Bearer'**.",
                     });
                 setup.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
                     {
+                    {
+                        new OpenApiSecurityScheme
                         {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer", },
-                                Scheme = "Bearer",
-                                Name = "Authorization",
-                                In = ParameterLocation.Header,
-                            },
-                            new List<string>()
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer", },
+                            Scheme = "Bearer",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
                         },
+                        new List<string>()
+                    },
                     });
                 setup.EnableAnnotations();
             });
