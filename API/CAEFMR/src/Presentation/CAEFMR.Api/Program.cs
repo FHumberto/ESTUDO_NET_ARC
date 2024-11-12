@@ -16,7 +16,7 @@ builder.Services.AddCustomHealthChecks
 
 #endregion
 
-#region ACOPLAMENTO DAS CAMADAS
+#region [ACOPLAMENTO DAS CAMADAS]
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
@@ -31,11 +31,15 @@ builder.Services.AddSwaggerWithVersioning();
 
 builder.Services.AddCorsPolicies();
 
+builder.Services.AddRateLimiterPolicies();
+
 WebApplication app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCorsPolicies();
+
+app.UseRateLimiter();
 
 if (app.Environment.IsDevelopment())
 {
