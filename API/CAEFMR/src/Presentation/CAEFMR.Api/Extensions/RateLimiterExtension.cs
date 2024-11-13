@@ -13,16 +13,21 @@ public static class RateLimiterExtension
     {
         services.AddRateLimiter(options =>
         {
-            //? configuração da poilitica global
-            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>
-            (httpContext => RateLimitPartition.GetFixedWindowLimiter("Fixed", _
-                => new FixedWindowRateLimiterOptions
-                {
-                    PermitLimit = 100,
-                    Window = TimeSpan.FromMinutes(1),
-                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst, // Ordem de processamento (ordem de chegada)
-                    QueueLimit = 2 // Limite de 2 requisições na fila de espera
-                }));
+            #region ===[ POLICIES ]====================================================================================
+
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext
+                => RateLimitPartition.GetFixedWindowLimiter("Fixed", _
+                    => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 100, // quantidade de requisições
+                        Window = TimeSpan.FromMinutes(1), // a cada um minuto
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst, // processamento (ordem de chegada)
+                        QueueLimit = 2 // limite de 2 requisições na fila de espera
+                    }));
+
+            #endregion
+
+            #region ===[ RESPONSE ]====================================================================================
 
             //? personaliza a resposta de rejeição
             options.OnRejected = async (context, cancellationToken) =>
@@ -32,6 +37,8 @@ public static class RateLimiterExtension
                     new { message = "Você excedeu o limite de requisições. Tente novamente mais tarde." },
                     cancellationToken);
             };
+
+            #endregion
         });
 
         return services;
