@@ -1,5 +1,4 @@
-﻿
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -10,17 +9,22 @@ namespace CAEFMR.Api.Extensions;
 
 public static class SwaggerExtension
 {
+    /// <summary>
+    /// Aplica a interface do Swagger configurada.
+    /// </summary>
+    /// <param name="app">O construtor da aplicação.</param>
+    /// <returns>O construtor da aplicação com o Swagger configurado.</returns>
     public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app)
     {
         IServiceProvider services = app.ApplicationServices;
-        var provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
+        IApiVersionDescriptionProvider provider = services.GetRequiredService<IApiVersionDescriptionProvider>();
 
         app.UseSwagger();
 
         app.UseSwaggerUI(
             options =>
             {
-                foreach (var description in provider.ApiVersionDescriptions)
+                foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
                 {
                     options.SwaggerEndpoint(
                         $"/swagger/{description.GroupName}/swagger.json",
@@ -31,9 +35,14 @@ public static class SwaggerExtension
         return app;
     }
 
+    /// <summary>
+    /// Adiciona as configurações do Swagger com versionamento à coleção de serviços da aplicação.
+    /// </summary>
+    /// <param name="services">A coleção de serviços da aplicação.</param>
+    /// <returns>A coleção de serviços da aplicação com as configurações do Swagger.</returns>
     public static IServiceCollection AddSwaggerWithVersioning(this IServiceCollection services)
     {
-        #region CONFIGURAÇÃO
+        #region ===[ ROTAS ]==========================================================================================
 
         services.AddApiVersioning(
             setup =>
@@ -52,7 +61,7 @@ public static class SwaggerExtension
 
         #endregion
 
-        #region AUTORIZAÇÃO
+        #region ===[ AUTORIZAÇÃO ]====================================================================================
 
         services.AddSwaggerGen(
             setup =>
@@ -88,7 +97,7 @@ public static class SwaggerExtension
 
         #endregion
 
-        #region INJEÇÃO
+        #region ===[ CONFIGURAÇÃO ]===================================================================================
 
         services.ConfigureOptions<ConfigureSwaggerOptions>();
 
@@ -101,7 +110,7 @@ public static class SwaggerExtension
     {
         public void Configure(SwaggerGenOptions options)
         {
-            foreach (var description in provider.ApiVersionDescriptions)
+            foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
             {
                 OpenApiInfo info = new()
                 {
@@ -110,7 +119,9 @@ public static class SwaggerExtension
                 };
 
                 if (description.IsDeprecated)
+                {
                     info.Description += "Esta Versão da API está deprecated.";
+                }
 
                 options.SwaggerDoc(description.GroupName, info);
             }
