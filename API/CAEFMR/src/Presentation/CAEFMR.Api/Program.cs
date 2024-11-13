@@ -5,6 +5,7 @@ using CAEFMR.Identity;
 using CAEFMR.Infrastructure;
 using CAEFMR.Persistence;
 using HealthChecks.UI.Client;
+using HealthChecks.UI.Configuration;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -43,19 +44,19 @@ app.UseRateLimiter();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerWithVersioning();
+    _ = app.UseSwaggerWithVersioning();
 }
 
 # region [HEALTH_CHECK MAP]
 
-app.MapHealthChecks("/health",
+app.MapHealthChecks("/api/health",
     new HealthCheckOptions
     {
         Predicate = _ => true,
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
-app.UseHealthChecksUI(options =>
+app.UseHealthChecksUI(delegate (Options options)
 {
     options.UIPath = "/dashboard";
 });
