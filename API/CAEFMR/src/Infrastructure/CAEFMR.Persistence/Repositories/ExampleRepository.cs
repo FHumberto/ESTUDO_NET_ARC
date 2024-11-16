@@ -11,9 +11,10 @@ public class ExampleRepository(AppDbContext context) : GenericRepository<Example
 {
     public async Task<ExampleDto> GetExampleByNameAsync(string name)
     {
-        var example = await _context.Examples.FirstOrDefaultAsync(p => p.Nome == name);
+        Example? example = await _context.Examples
+            .FirstOrDefaultAsync(p => p.Nome == name);
 
-        return new ExampleDto(example);
+        return example is null ? null : new ExampleDto(example);
     }
 
     public async Task<PagedResponse<ExampleDto>> GetPagedListAsync(int pageNumber, int pageSize)

@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using CAEFMR.Application.Wrappers;
+using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Commands.Update;
 
-public class UpdateExampleCommand : IRequest<Unit>
+//?  ENTRA ==> : <== VOLTA
+public class UpdateExampleCommand : IRequest<BaseResponse<string>>
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;

@@ -1,8 +1,7 @@
-﻿using MediatR;
+﻿using CAEFMR.Application.Wrappers;
+using MediatR;
 
 namespace CAEFMR.Application.Features.Example.Commands.Delete;
 
-public record DeleteExampleCommand : IRequest<Unit>
-{
-    public int Id { get; set; }
-}
+//?  ENTRA ==> : <== VOLTA
+public record DeleteExampleCommand(int Id) : IRequest<BaseResponse<string>>;

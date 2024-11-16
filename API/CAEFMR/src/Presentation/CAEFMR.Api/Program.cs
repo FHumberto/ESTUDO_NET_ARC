@@ -26,6 +26,8 @@ builder.Services.AddIdentityLayer(builder.Configuration);
 
 #endregion
 
+builder.Services.AddLogging();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerWithVersioning();
