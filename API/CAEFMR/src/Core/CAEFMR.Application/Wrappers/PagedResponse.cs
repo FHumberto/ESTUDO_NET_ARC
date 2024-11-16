@@ -1,19 +1,37 @@
 ﻿namespace CAEFMR.Application.Wrappers;
 
-public class PagedResponse<T>
+public class PagedResponse<T> : BaseResponse<List<T>>
 {
-    public int PageNumber { get; init; }
-    public int PageSize { get; init; }
-    public int TotalRecords { get; init; }
-    public int TotalPages { get; init; }
-    public List<T> Data { get; init; }
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
+    public int TotalPages { get; set; }
+    public int TotalItems { get; set; }
 
-    public PagedResponse(List<T> data, int pageNumber, int pageSize, int totalRecords)
+    public static PagedResponse<T> Ok(PaginationResponseDto<T> model)
     {
-        Data = data;
-        PageNumber = pageNumber;
-        PageSize = pageSize;
-        TotalRecords = totalRecords;
-        TotalPages = (int)Math.Ceiling((decimal)totalRecords / (decimal)pageSize);
+        return new PagedResponse<T>
+        {
+            Success = true,
+            Data = model.Data,
+            PageNumber = model.PageNumber,
+            PageSize = model.PageSize,
+            TotalItems = model.Count,
+            TotalPages = (int)Math.Ceiling(model.Count / (double)model.PageSize)
+        };
     }
+
+    public new static PagedResponse<T> Failure(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public new static PagedResponse<T> Failure(IEnumerable<Error> errors)
+        => new() { Success = false, Errors = errors.ToList() };
+
+    public static implicit operator PagedResponse<T>(PaginationResponseDto<T> model)
+        => Ok(model);
+
+    public static implicit operator PagedResponse<T>(Error error)
+        => new() { Success = false, Errors = [error] };
+
+    public static implicit operator PagedResponse<T>(List<Error> errors)
+        => new() { Success = false, Errors = errors };
 }

@@ -43,7 +43,7 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
         await _context.SaveChangesAsync();
     }
 
-    protected async Task<PagedResponse<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize) where TEntity : class
+    protected async Task<PaginationResponseDto<TEntity>> Paged<TEntity>(IQueryable<TEntity> query, int pageNumber, int pageSize) where TEntity : class
     {
         int count = await query.CountAsync();
 
@@ -53,6 +53,6 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
             .AsNoTracking()
             .ToListAsync();
 
-        return new PagedResponse<TEntity>(pagedResult, pageNumber, pageSize, count);
+        return new(pagedResult, pageNumber, pageSize, count);
     }
 }

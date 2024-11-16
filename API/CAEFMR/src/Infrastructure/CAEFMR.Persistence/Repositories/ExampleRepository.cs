@@ -20,7 +20,7 @@ public class ExampleRepository(AppDbContext context) : GenericRepository<Example
     public async Task<PagedResponse<ExampleDto>> GetPagedListAsync(int pageNumber, int pageSize)
     {
         IQueryable<Example> query = _context.Examples
-            .OrderBy(p => p.CreatedDate)
+            .OrderBy(p => p.Id)
             .AsQueryable();
 
         return await Paged(

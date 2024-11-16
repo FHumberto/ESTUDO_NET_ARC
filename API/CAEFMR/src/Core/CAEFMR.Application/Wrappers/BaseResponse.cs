@@ -9,7 +9,7 @@ public class BaseResponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] //? quando vir nulo, não exibe
     public List<Error>? Errors { get; set; }
 
-    public static BaseResponse Ok(Domain.DTOs.ExampleDto data)
+    public static BaseResponse Ok()
         => new() { Success = true };
 
     public static BaseResponse Failure()
