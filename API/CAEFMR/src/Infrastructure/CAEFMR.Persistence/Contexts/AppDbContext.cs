@@ -1,18 +1,19 @@
-﻿using CAEFMR.Domain.Entities;
+﻿using CAEFMR.Application.Contracts.Identity;
+using CAEFMR.Domain.Entities;
 using CAEFMR.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAEFMR.Persistence.Contexts;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options, IUserService userService) : DbContext(options)
 {
-    #region Tabelas
+    #region ===[ TABLES ]===============================================================================================
 
-    public DbSet<Example> Examples { get; set; }
+    public DbSet<Example>? Examples { get; set; }
 
     #endregion
 
-    #region Configurações
+    #region ===[ CONFIGURATION ]========================================================================================
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,11 +39,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedDate = localNow;
+                    entry.Entity.CreatedBy = userService.UserId;
                     entry.Entity.UpdatedDate = localNow;
                 }
                 else if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.UpdatedDate = localNow;
+                    entry.Entity.ModifiedBy = userService.UserId;
                 }
             });
 

@@ -3,11 +3,19 @@ using CAEFMR.Application.Wrappers;
 using CAEFMR.Domain.DTOs;
 using CAEFMR.Domain.Entities;
 using CAEFMR.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAEFMR.Persistence.Repositories;
 
 public class ExampleRepository(AppDbContext context) : GenericRepository<Example>(context), IExampleRepository
 {
+    public async Task<ExampleDto> GetExampleByNameAsync(string name)
+    {
+        var example = await _context.Examples.FirstOrDefaultAsync(p => p.Nome == name);
+
+        return new ExampleDto(example);
+    }
+
     public async Task<PagedResponse<ExampleDto>> GetPagedListAsync(int pageNumber, int pageSize)
     {
         IQueryable<Example> query = _context.Examples

@@ -10,6 +10,7 @@ public class ExampleConfiguration : IEntityTypeConfiguration<Example>
     public void Configure(EntityTypeBuilder<Example> builder)
     {
         builder.HasKey(p => p.Id);
+        builder.HasIndex(p => p.Nome).IsUnique();
         builder.Property(p => p.Nome).IsRequired().HasMaxLength(100);
         builder.Property(p => p.Preco).HasColumnType("decimal(18,2)");
     }
