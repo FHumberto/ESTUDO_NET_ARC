@@ -27,6 +27,28 @@ A camada de Infrastructure fornece implementações concretas para os serviços nec
 
 # SERVIÇOS
 
-https://localhost:7101/swagger/index.html
-https://localhost:7101/dashboard#/healthchecks
-https://localhost:7101/health
+- `SWAGGER` - https://localhost:7101/swagger/index.html
+- `HEALTH CHECK DASHBOARD` - https://localhost:7101/dashboard#/healthchecks
+- `HEALTH CHEACK ENDPOINTS` - https://localhost:7101/health
+
+# TECNOLOGIAS
+
+- `.NET 8` 
+- `C# 12.0`
+- `MediatR`
+- `Swagger`
+- `HealthChecks`
+- `HealthChecks.UI`
+- `Entity Framework Core`
+- `FluentValidation`
+- `AutoMapper`
+- `JWT (JSON Web Token)`
+- `API Versioning`
+- `Rate Limiting`
+- `Problem Details`
+
+# MATERIAL DE REFERÊNCIA
+
+- [RateLimiter (Doc. Microsoft)](https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0)
+- [Handle Erros (Doc. Microsoft)](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-8.0)
+- [Global Error Handling (Blog. Milan)](https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8)
