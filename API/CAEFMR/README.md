@@ -52,3 +52,43 @@ A camada de Infrastructure fornece implementações concretas para os serviços nec
 - [RateLimiter (Doc. Microsoft)](https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0)
 - [Handle Erros (Doc. Microsoft)](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-8.0)
 - [Global Error Handling (Blog. Milan)](https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8)
+
+# EXECUTANDO O PROJETO
+
+## Pré-requisitos
+
+- Visual Studio 2022
+- .NET 8 SDK
+- SQL Server
+
+## Passo 1: Abrir o Projeto no Visual Studio
+
+Abra o Visual Studio 2022 e selecione `Open a project or solution`. Navegue até o diretório onde você clonou o repositório e selecione o arquivo da solução (`.sln`).
+
+## Passo 2: Configurar a String de Conexão
+
+Edite o arquivo `appsettings.json` no projeto `CAEFMR.Api`:
+
+```json
+{ "ConnectionStrings": { "DefaultConnection": "Server=YOUR_SERVER;Database=YOUR_DATABASE;User Id=YOUR_USER;Password=YOUR_PASSWORD;" } }
+```
+
+## Passo 3: Aplicar as Migrations
+
+No `Package Manager Console`, selecione o projeto `CAEFMR.Persistence` e execute:
+
+`Update-Database -Context AppDbContext`
+
+Em seguida, selecione o projeto `CAEFMR.Identity` e execute:
+
+`Update-Database -Context IdentityDbContext`
+
+## Passo 4: Executar a Aplicação
+
+Selecione o projeto `CAEFMR.Api` como projeto de inicialização e pressione `F5` ou clique em `Start`.
+
+## Passo 5: Acessar os Serviços
+
+- `SWAGGER` - [https://localhost:7101/swagger/index.html](https://localhost:7101/swagger/index.html)
+- `HEALTH CHECK DASHBOARD` - [https://localhost:7101/dashboard#/healthchecks](https://localhost:7101/dashboard#/healthchecks)
+- `HEALTH CHECK ENDPOINTS` - [https://localhost:7101/health](https://localhost:7101/health)
