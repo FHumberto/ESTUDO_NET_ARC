@@ -1,5 +1,5 @@
 ﻿using CAEFMR.Application.Contracts.Identity;
-using CAEFMR.Application.Models.Identity;
+using CAEFMR.Application.Settings;
 using CAEFMR.Identity.Contexts;
 using CAEFMR.Identity.Models;
 using CAEFMR.Identity.Services;

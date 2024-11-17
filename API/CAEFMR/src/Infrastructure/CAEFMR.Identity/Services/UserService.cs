@@ -22,7 +22,7 @@ public class UserService : IUserService
 
     public async Task<Employee> GetEmployee(string userId)
     {
-        var employee = await _userManager.FindByIdAsync(userId);
+        ApplicationUser? employee = await _userManager.FindByIdAsync(userId);
         return new Employee
         {
             Email = employee.Email,
@@ -34,7 +34,7 @@ public class UserService : IUserService
 
     public async Task<List<Employee>> GetEmployees()
     {
-        var employees = await _userManager.GetUsersInRoleAsync("Employee");
+        IList<ApplicationUser> employees = await _userManager.GetUsersInRoleAsync("Employee");
         return employees.Select(q => new Employee
         {
             Id = q.Id,

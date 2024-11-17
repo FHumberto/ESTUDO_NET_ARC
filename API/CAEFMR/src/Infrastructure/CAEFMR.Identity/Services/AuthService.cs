@@ -1,8 +1,8 @@
 ﻿using CAEFMR.Application.Contracts.Identity;
-using CAEFMR.Application.Exceptions;
 using CAEFMR.Application.Features.Auth.Login;
 using CAEFMR.Application.Features.Auth.Registration;
-using CAEFMR.Application.Models.Identity;
+using CAEFMR.Application.Settings;
+using CAEFMR.Application.Wrappers;
 using CAEFMR.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -27,38 +27,38 @@ public class AuthService : IAuthService
         _signInManager = signInManager;
     }
 
-    public async Task<AuthResponse> Login(AuthRequest request)
+    public async Task<BaseResponse<AuthResponse>> Login(AuthRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        ApplicationUser? user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user == null)
         {
-            throw new NotFoundException($"User with {request.Email} not found.", request.Email);
+            return BaseResponse<AuthResponse>.Failure(new Error(ErrorCode.NotFound, "Usuário não encontrado.", request.Email));
         }
 
-        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
-        if (result.Succeeded == false)
+        if (!result.Succeeded)
         {
-            throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            return BaseResponse<AuthResponse>.Failure(new Error(ErrorCode.BadRequest, $"Credênciais Inválidas."));
         }
 
         JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
-        var response = new AuthResponse
+        AuthResponse? response = new()
         {
             Id = user.Id,
             Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-            Email = user.Email,
-            UserName = user.UserName
+            Email = user.Email ?? string.Empty,
+            UserName = user.UserName ?? string.Empty
         };
 
-        return response;
+        return BaseResponse<AuthResponse>.Ok(response);
     }
 
-    public async Task<RegistrationResponse> Register(RegistrationRequest request)
+    public async Task<BaseResponse<RegistrationResponse>> Register(RegistrationRequest request)
     {
-        var user = new ApplicationUser
+        ApplicationUser? user = new()
         {
             Email = request.Email,
             FirstName = request.FirstName,
@@ -67,7 +67,7 @@ public class AuthService : IAuthService
             EmailConfirmed = true
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        IdentityResult? result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {
@@ -76,24 +76,25 @@ public class AuthService : IAuthService
         }
         else
         {
-            StringBuilder str = new StringBuilder();
-            foreach (var err in result.Errors)
+            StringBuilder str = new();
+
+            foreach (IdentityError err in result.Errors)
             {
                 str.AppendFormat("•{0}\n", err.Description);
             }
 
-            throw new BadRequestException($"{str}");
+            return BaseResponse<RegistrationResponse>.Failure(new Error(ErrorCode.BadRequest, $"{str}"));
         }
     }
 
     private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
     {
-        var userClaims = await _userManager.GetClaimsAsync(user);
-        var roles = await _userManager.GetRolesAsync(user);
+        IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
+        IList<string> roles = await _userManager.GetRolesAsync(user);
 
-        var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
+        List<Claim> roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
 
-        var claims = new[]
+        IEnumerable<Claim> claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -103,11 +104,11 @@ public class AuthService : IAuthService
         .Union(userClaims)
         .Union(roleClaims);
 
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+        SymmetricSecurityKey symmetricSecurityKey = new(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        SigningCredentials signingCredentials = new(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-        var jwtSecurityToken = new JwtSecurityToken(
+        JwtSecurityToken jwtSecurityToken = new(
            issuer: _jwtSettings.Issuer,
            audience: _jwtSettings.Audience,
            claims: claims,

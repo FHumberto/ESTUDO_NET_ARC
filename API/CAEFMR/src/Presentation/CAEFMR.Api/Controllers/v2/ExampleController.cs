@@ -35,7 +35,7 @@ public class ExampleController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<PagedResponse<ExampleDto>> GetPagedList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var query = new GetExamplePagedListQuery { PageNumber = pageNumber, PageSize = pageSize };
+        GetExamplePagedListQuery query = new() { PageNumber = pageNumber, PageSize = pageSize };
         return await Mediator.Send(query);
     }
 }

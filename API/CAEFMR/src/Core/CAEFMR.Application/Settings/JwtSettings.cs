@@ -1,4 +1,4 @@
-﻿namespace CAEFMR.Application.Models.Identity;
+﻿namespace CAEFMR.Application.Settings;
 public class JwtSettings
 {
     public required string Key { get; set; }
