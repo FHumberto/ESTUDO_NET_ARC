@@ -28,6 +28,10 @@ builder.Services.AddIdentityLayer(builder.Configuration);
 
 builder.Services.AddLogging();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddProblemDetails();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerWithVersioning();
@@ -38,7 +42,7 @@ builder.Services.AddRateLimiterPolicies();
 
 WebApplication app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
+app.UseExceptionHandler();
 
 app.UseCorsPolicies();
 
