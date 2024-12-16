@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>CA_CQRS_MR.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CA-CQRS_MR.Application\CA-CQRS_MR.Application.csproj" />
+    <ProjectReference Include="..\..\Core\CA-CQRS_MR.Domain\CA-CQRS_MR.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CA-CQRS_MR.Identity\CA-CQRS_MR.Identity.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CA-CQRS_MR.Infrastructure\CA-CQRS_MR.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CA-CQRS_MR.Persistence\CA-CQRS_MR.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
